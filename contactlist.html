@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+</head>
+
+<body>
+
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center text-uppercase">Contact List</h1>
+        <div class="col-md-12 set-border mt-5 p-0">
+            <div class="table-wrapper">
+
+                <table class="fl-table" id="">
+                    <tr id="header">
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Trash</th>
+                    </tr>
+                </table>
+                <table class="fl-table" id="detail-table">
+                </table>
+            </div>
+
+            <div class="col-md-12 mt-5 pt-5 mb-5 pb-5">
+                <div class="form-box">
+                    <form class="setdata" onsubmit="return submitF()" name="personalform">
+                        <div class="form-group" id="fname-hide">
+                            <label for="fname">Name</label><i id="error1">**Required**</i>
+                            <input class="form-control" id="fname" type="text" name="Name" oninput="textEmpty()">
+                        </div>
+                        <div class="form-group" id="add-hide">
+                            <label for="address">Address</label><i id="error2">**Required**</i>
+                            <input class="form-control" id="address" type="text" name="Address"
+                                oninput="textEmptysnd()">
+                        </div>
+                        <div class="form-group" id="number-hide">
+                            <label for="number">Phone Number</label><i id="error3">**Required**</i>
+                            <input class="form-control" id="number" type="tel" name="Number" oninput="textEmptytrd()">
+                        </div>
+                        <div class="form-group" id="mail-hide">
+                            <label for="email">Email</label><i id="error4">**Required**</i>
+                            <input class="form-control" id="email" type="email" name="Email" oninput="textEmptyfrth()">
+                            <p id="email-valid">**Mail Already Exists**</p>
+                        </div>
+
+                        <input type="submit" class="btn btn-primary" id="submit">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
