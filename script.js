@@ -2,7 +2,8 @@
 var contactDetails = [];
 let edit = false;
 let currentId;
-let globalCell1, globalCell2, globalCell3, globalCell4;
+let reupdateId;
+//let globalCell1, globalCell2, globalCell3, globalCell4;
 function renderDetail() {
     const table = document.getElementById("detail-table");
     table.innerHTML = '';
@@ -13,6 +14,9 @@ function renderDetail() {
         //const rowId = Math.floor((Math.random() * 5000) + 402);
         
         let row = table.insertRow();
+        row.setAttribute('id', itemID);
+        reupdateId = itemID;
+        console.log(reupdateId);
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
         let cell3 = row.insertCell(2);
@@ -123,17 +127,6 @@ function addEmail(email) {
     document.getElementById("email").value = email;
 }
 
-// globalCell.addEventListener('click', function() {
-//     console.log('add');
-    
-//   });
-//   function addName(name) {
-//     contactDetails.map((item, i) => {
-//         if (item.fname == name) {
-//             document.getElementById("fname").value = item.fname;
-//         }
-//     });
-// }
   
 
 //update data
@@ -145,13 +138,6 @@ function updateRow() {
     contactDetails[currentId].number = document.getElementById('number').value;
     contactDetails[currentId].email = document.getElementById('email').value;
 
-    //single use
-    contactDetails[globalCell1].fname = document.getElementById('fname').value;
-    contactDetails[globalCell2].address = document.getElementById('address').value;
-    contactDetails[globalCell3].number = document.getElementById('number').value;
-    contactDetails[globalCell4].email = document.getElementById('email').value;
-
-    
     document.getElementById("fname").value = '';
     document.getElementById("address").value = '';
     document.getElementById("number").value = '';
