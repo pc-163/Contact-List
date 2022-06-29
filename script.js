@@ -1,9 +1,8 @@
 
 var contactDetails = [];
 let edit = false;
-let currentId;
-let reupdateId;
-//let globalCell1, globalCell2, globalCell3, globalCell4;
+let currentId, currentIndex, globalProperty;
+
 function renderDetail() {
     const table = document.getElementById("detail-table");
     table.innerHTML = '';
@@ -11,22 +10,12 @@ function renderDetail() {
     for (let i = 0; i < contactDetails.length; i++) {
 
         const itemID = contactDetails[i].id;
-        //const rowId = Math.floor((Math.random() * 5000) + 402);
-        
         let row = table.insertRow();
-        row.setAttribute('id', itemID);
-        reupdateId = itemID;
-        console.log(reupdateId);
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
         let cell3 = row.insertCell(2);
         let cell4 = row.insertCell(3);
         let cell5 = row.insertCell(4);
-
-        globalCell1 = cell1;
-        globalCell2 = cell2;
-        globalCell3 = cell3;
-        globalCell4 = cell4;
 
         cell1.innerHTML = contactDetails[i].fname;
         cell2.innerHTML = contactDetails[i].address;
@@ -34,21 +23,29 @@ function renderDetail() {
         cell4.innerHTML = contactDetails[i].email;
         cell5.innerHTML = `<i onclick="editRow('${itemID}')">Edit</i><i onclick="deleteRow('${itemID}')">Delete</i>`;
         //console.log(table);
-        
-        cell1.addEventListener('click', function() {
-            addName(cell1.innerHTML);
+
+        cell1.addEventListener('click', function () {
+            addProperty(i, 'fname');
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'block';
         });
-          cell2.addEventListener('click', function() {
-            addAddress(cell2.innerHTML);
-          });
-          cell3.addEventListener('click', function() {
-            addNumber(cell3.innerHTML);
-          });
-          cell4.addEventListener('click', function() {
-            addEmail(cell4.innerHTML);
-          });
+        cell2.addEventListener('click', function () {
+            addProperty(i, 'address');
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'block';
+        });
+        cell3.addEventListener('click', function () {
+            addProperty(i, 'number');
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'block';
+        });
+        cell4.addEventListener('click', function () {
+            addProperty(i, 'email');
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'block';
+        });
     }
-   
+
     return false;
 }
 
@@ -56,8 +53,6 @@ function renderDetail() {
 function submitF() {
     const isValid = validation(); //validation
     if (isValid) {
-        //console.log("contactDetails", contactDetails);
-
         if (edit) {
             updateRow();
             //alert("List Update");
@@ -80,10 +75,9 @@ function submitF() {
 
             if (fname !== '' && address !== '' && number !== '' && email !== '') {
                 renderDetail();
-                //document.querySelectorAll("#detail-table td").classList.add("mystyle");
             } else {
                 alert('Field Can not be Empty');
-            }   
+            }
 
             document.getElementById("fname").value = '';
             document.getElementById("address").value = '';
@@ -92,14 +86,12 @@ function submitF() {
             return false;
         }
     } else {
-        //console.log("contactDetails", contactDetails);
         return false;
     }
 }
 
 //edit row data
 function editRow(id) {
-
     contactDetails.map((item, i) => {
         if (item.id == id) {
             currentId = i; //pass the i index number to editindex
@@ -110,24 +102,22 @@ function editRow(id) {
         }
     });
     edit = true;
-    // console.log(edit);
-    // console.log(contactDetails);
 }
 
-function addName(name) {
-    document.getElementById("fname").value = name;
-}
-function addAddress(address) {
-    document.getElementById("address").value = address;
-}
-function addNumber(number) {
-    document.getElementById("number").value = number;
-}
-function addEmail(email) {
-    document.getElementById("email").value = email;
+//reupdate values
+function addProperty(i, currentProperty) {
+    currentIndex = i;
+    globalProperty = currentProperty;
+    document.getElementById("update").value = contactDetails[i][currentProperty];
 }
 
-  
+//update single data
+function updateData() {
+    contactDetails[currentIndex][globalProperty] = document.getElementById('update').value;
+    renderDetail();
+    document.getElementById("update").value = '';
+    return false;
+}
 
 //update data
 function updateRow() {
@@ -137,15 +127,12 @@ function updateRow() {
     contactDetails[currentId].address = document.getElementById('address').value;
     contactDetails[currentId].number = document.getElementById('number').value;
     contactDetails[currentId].email = document.getElementById('email').value;
-
+    edit = false;
+    renderDetail();
     document.getElementById("fname").value = '';
     document.getElementById("address").value = '';
     document.getElementById("number").value = '';
     document.getElementById("email").value = '';
-    edit = false;
-    // console.log(edit);
-    // console.log(contactDetails);
-    renderDetail();
 }
 
 
@@ -155,25 +142,45 @@ function deleteRow(id) {
     var item = contactDetails.filter((item) => item.id != id);
     contactDetails = item;
     renderDetail();
-    //console.log(contactDetails);
+    document.getElementById("fname").value = '';
+    document.getElementById("address").value = '';
+    document.getElementById("number").value = '';
+    document.getElementById("email").value = '';
 }
 
 
 //form validation
 function validation() {
-
     const fname = document.getElementById('fname').value;
     const address = document.getElementById('address').value;
     const number = document.getElementById('number').value;
     const email = document.getElementById('email').value;
 
-    if (fname == '' || address == '' || number == '' || email == '') {
+    if (fname == "") {
         document.getElementById("fname-hide").classList.add("error");
+        return false;
+    }
+    if (address == "") {
         document.getElementById("add-hide").classList.add("error");
+        return false;
+    }
+    if (number == "") {
         document.getElementById("number-hide").classList.add("error");
+        return false;
+    }
+    if (email == "") {
         document.getElementById("mail-hide").classList.add("error");
         return false;
     }
+
+
+    // if (fname == '' || address == '' || number == '' || email == '') {
+    //     document.getElementById("fname-hide").classList.add("error");
+    //     document.getElementById("add-hide").classList.add("error");
+    //     document.getElementById("number-hide").classList.add("error");
+    //     document.getElementById("mail-hide").classList.add("error");
+    //     return false;
+    // }
 
     if (contactDetails.length > 0) {
         const numberValue = contactDetails.find((item) =>
@@ -191,52 +198,19 @@ function validation() {
         }
 
         const emailValue = contactDetails.find((item) =>
-        item.email == email
-    );
-    if (emailValue) {
-        alert("Email already exist...");
-        document.getElementById("fname").value = '';
-        document.getElementById("address").value = '';
-        document.getElementById("number").value = '';
-        document.getElementById("email").value = '';
-        return false;
-    } else {
-        // alert("No Matching email found...");
+            item.email == email
+        );
+        if (emailValue) {
+            alert("Email already exist...");
+            document.getElementById("fname").value = '';
+            document.getElementById("address").value = '';
+            document.getElementById("number").value = '';
+            document.getElementById("email").value = '';
+            return false;
+        } else {
+            // alert("No Matching email found...");
+        }
     }
-    }
-
-    // if (contactDetails.length > 0) {
-    //     contactDetails.find((item) => {
-    //         if (item.email == email) {
-    //             alert("Email Match");
-    //             return false;
-    //         }
-    //         else if (item.number == number) {
-    //             alert("Number Match");
-    //             return false;
-    //         }else{
-    //             alert("Not Match");
-    //         }
-    //     } );
-    // }
-
-    // if (fname == "") {
-    //     document.getElementById("fname-hide").classList.add("error");
-    //     return false;
-    // }
-    // if (address == "") {
-    //     document.getElementById("add-hide").classList.add("error");
-    //     return false;
-    // }
-    // if (number == "") {
-    //     document.getElementById("number-hide").classList.add("error");
-    //     return false;
-    // }
-    // if (email == "") {
-    //     document.getElementById("mail-hide").classList.add("error");
-    //     return false;
-    // }
-
     return true;
 }
 
@@ -254,3 +228,9 @@ function textEmptyfrth() {
     document.getElementById("mail-hide").classList.remove("error");
 }
 
+//display form
+let addDetail = document.getElementById("hide-click");
+addDetail.addEventListener('click', function () {
+    document.getElementById('contact-form').style.display = 'block';
+    document.getElementById('update-form').style.display = 'none';
+});

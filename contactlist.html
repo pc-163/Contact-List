@@ -14,7 +14,11 @@
 <body>
 
     <div class="container mt-5 mb-5">
-        <h1 class="text-center text-uppercase">Contact List</h1>
+        
+        <div class="col-md-12 ">
+            <h1 class="text-center text-uppercase">Contact List</h1>
+            <p id="hide-click" class="px-4 py-2">Add New Details</p>
+        </div>
         <div class="col-md-12 set-border mt-5 p-0">
             <div class="table-wrapper">
 
@@ -33,7 +37,7 @@
 
             <div class="col-md-12 mt-5 pt-5 mb-5 pb-5">
                 <div class="form-box">
-                    <form class="setdata" onsubmit="return submitF()" name="personalform">
+                    <form class="setdata" onsubmit="return submitF()" name="personalform" id="contact-form">
                         <div class="form-group" id="fname-hide">
                             <label for="fname">Name</label><i id="error1">**Required**</i>
                             <input class="form-control" id="fname" type="text" name="Name" oninput="textEmpty()">
@@ -52,10 +56,19 @@
                             <input class="form-control" id="email" type="email" name="Email" oninput="textEmptyfrth()">
                             <p id="email-valid">**Mail Already Exists**</p>
                         </div>
-
                         <input type="submit" class="btn btn-primary" id="submit">
-                </div>
+
+                       
                 </form>
+                <form class="setdata" onsubmit="return updateData()" name="personalform" id="update-form">
+                    <div class="form-group" id="fname-hide">
+                        <input class="form-control" id="update" type="text" name="Update" oninput="textEmpty()">
+                        <i id="error1">**Required**</i>
+                    </div>
+                    <input type="submit" class="btn btn-primary" id="submit">
+                    
+                </form>
+                
             </div>
         </div>
     </div>
